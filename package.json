@@ -4,11 +4,18 @@
   "description": "A datetime tool for the ages in ReasonML",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "bsb -make-world",
+    "clean": "bsb -clean-world",
+    "cleanbuild": "npm run clean && npm run build",
+    "test": "jest --coverage",
+    "cleantest": "npm run clean && npm run build && npm run test",
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "watch": "bsb -make-world -w",
+    "start": "npm run watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reazen/relude-eon.git"
+    "url": "https://github.com/reazen/relude-eon.git"
   },
   "keywords": [
     "date",
@@ -26,11 +33,20 @@
   "dependencies": {},
   "peerDependencies": {
     "bs-abstract": "^0.17.0",
-    "relude": "^0.19.0"
+    "relude": "^0.20.0"
   },
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.9",
     "bs-abstract": "^0.17.0",
     "bs-platform": "^5.0.6",
-    "relude": "^0.19.0"
+    "relude": "^0.20.0"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "./test"
+    ],
+    "testMatch": [
+      "**/test/*.js"
+    ]
   }
 }
