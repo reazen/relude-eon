@@ -2,14 +2,9 @@ open Jest;
 open Expect;
 open ReludeEon;
 
+open SampleData;
+
 describe("YMD", () => {
-  let ymd20181201 = YMD.makeClamped(2018, Dec, 1);
-  let ymd20190101 = YMD.makeClamped(2019, Jan, 1);
-  let ymd20190131 = YMD.makeClamped(2019, Jan, 31);
-  let ymd20190228 = YMD.makeClamped(2019, Feb, 28);
-  let ymd20190301 = YMD.makeClamped(2019, Mar, 1);
-  let ymd20200101 = YMD.makeClamped(2020, Jan, 31);
-  let ymd20200229 = YMD.makeClamped(2020, Feb, 29);
   // let ymd20200301 = YMD.makeClamped(2020, Mar, 1);
 
   test("daysInMonth (jan)", () =>
@@ -61,6 +56,30 @@ describe("YMD", () => {
     expect(YMD.nextMonth(ymd20181201)) |> toEqual(ymd20190101)
   );
 
+  test("add days", () =>
+    expect(YMD.addDays(7, ymd20190221)) |> toEqual(ymd20190228)
+  );
+
+  test("add days (more than one month)", () =>
+    expect(YMD.addDays(57, ymd20180808)) |> toEqual(ymd20181004)
+  );
+
+  test("add days (negative)", () =>
+    expect(YMD.addDays(-30, ymd20190131)) |> toEqual(ymd20190101)
+  );
+
+  test("nextDay (year rollover)", () =>
+    expect(YMD.nextDay(ymd20181231)) |> toEqual(ymd20190101)
+  );
+
+  test("prevDay (Mar 1, non-leap-year)", () =>
+    expect(YMD.prevDay(ymd20190301)) |> toEqual(ymd20190228)
+  );
+
+  test("prevDay (Mar 1, leap-year)", () =>
+    expect(YMD.prevDay(ymd20200301)) |> toEqual(ymd20200229)
+  );
+
   test("isLeapYear (2019)", () =>
     expect(YMD.isLeapYear(ymd20190131)) |> toEqual(false)
   );
@@ -68,5 +87,4 @@ describe("YMD", () => {
   test("isLeapYear (2020)", () =>
     expect(YMD.isLeapYear(ymd20200101)) |> toEqual(true)
   );
-
 });
