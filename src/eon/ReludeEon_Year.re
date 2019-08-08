@@ -6,6 +6,8 @@ type t =
 let isLeapYear = (Year(year)) =>
   year mod 4 == 0 && (year mod 100 != 0 || year mod 400 == 0);
 
+let totalDays = year => isLeapYear(year) ? 366 : 365;
+
 let addYears = (howMany, Year(year)) => Year(year + howMany);
 
 let next = year => addYears(1, year);

@@ -1,15 +1,16 @@
 type t;
 
-let isLeapYear: t => bool;
 let daysInMonth: t => int;
+let makeWrapped: (int, ReludeEon_Month.t, int) => t;
+let makeClamped: (int, ReludeEon_Month.t, int) => t;
+let make: (int, ReludeEon_Month.t, int) => option(t);
 let prevMonth: t => t;
 let nextMonth: t => t;
 let addDays: (int, t) => t;
 let nextDay: t => t;
 let prevDay: t => t;
-let makeWrapped: (int, ReludeEon_Month.t, int) => t;
-let makeClamped: (int, ReludeEon_Month.t, int) => t;
-let make: (int, ReludeEon_Month.t, int) => option(t);
+let isLeapYear: t => bool;
+let daysInYear: t => int;
 let eq: (t, t) => bool;
 let compare: (t, t) => BsAbstract.Interface.ordering;
 module Eq: {

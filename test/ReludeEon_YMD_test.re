@@ -5,8 +5,6 @@ open ReludeEon;
 open SampleData;
 
 describe("YMD", () => {
-  // let ymd20200301 = YMD.makeClamped(2020, Mar, 1);
-
   test("daysInMonth (jan)", () =>
     expect(YMD.daysInMonth(ymd20190101)) |> toEqual(31)
   );
@@ -56,15 +54,15 @@ describe("YMD", () => {
     expect(YMD.nextMonth(ymd20181201)) |> toEqual(ymd20190101)
   );
 
-  test("add days", () =>
+  test("addDays", () =>
     expect(YMD.addDays(7, ymd20190221)) |> toEqual(ymd20190228)
   );
 
-  test("add days (more than one month)", () =>
+  test("addDays (more than one month)", () =>
     expect(YMD.addDays(57, ymd20180808)) |> toEqual(ymd20181004)
   );
 
-  test("add days (negative)", () =>
+  test("addDays (negative)", () =>
     expect(YMD.addDays(-30, ymd20190131)) |> toEqual(ymd20190101)
   );
 
@@ -86,5 +84,37 @@ describe("YMD", () => {
 
   test("isLeapYear (2020)", () =>
     expect(YMD.isLeapYear(ymd20200101)) |> toEqual(true)
+  );
+
+  test("daysInYear (2019)", () =>
+    expect(YMD.daysInYear(ymd20190301)) |> toEqual(365)
+  );
+
+  test("daysInYear (2020)", () =>
+    expect(YMD.daysInYear(ymd20200101)) |> toEqual(366)
+  );
+
+  test("eq (true)", () =>
+    expect(YMD.eq(ymd20200301, ymd20200301)) |> toEqual(true)
+  );
+
+  test("eq (false)", () =>
+    expect(YMD.eq(ymd20190301, ymd20200301)) |> toEqual(false)
+  );
+
+  test("compare (eq)", () =>
+    expect(YMD.compare(ymd20190301, ymd20190301)) |> toEqual(`equal_to)
+  );
+
+  test("compare (day is less-than)", () =>
+    expect(YMD.compare(ymd20190221, ymd20190228)) |> toEqual(`less_than)
+  );
+
+  test("compare (month is less but year is greater", () =>
+    expect(YMD.compare(ymd20200101, ymd20190301)) |> toEqual(`greater_than)
+  );
+
+  test("compare (year is the same, month is less-than", () =>
+    expect(YMD.compare(ymd20190101, ymd20190228)) |> toEqual(`less_than)
   );
 });

@@ -76,6 +76,8 @@ let prevDay = ymd => addDays(-1, ymd);
 
 let isLeapYear = (YMD(year, _, _)) => Year.isLeapYear(year);
 
+let daysInYear = (YMD(year, _, _)) => Year.totalDays(year);
+
 let eq = (YMD(yeara, montha, daya), YMD(yearb, monthb, dayb)) =>
   Year.eq(yeara, yearb)
   && Month.eq(montha, monthb)

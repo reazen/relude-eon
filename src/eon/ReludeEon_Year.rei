@@ -9,6 +9,12 @@ type t =
 let isLeapYear: t => bool;
 
 /**
+ * Find the total number of days in the year. Leap years have 366, all others
+ * have 365.
+ */
+let totalDays: t => int;
+
+/**
  * Increase a year by a given int.
  */
 let addYears: (int, t) => t;
