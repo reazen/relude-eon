@@ -9,7 +9,7 @@
     "cleanbuild": "npm run clean && npm run build",
     "test": "jest --coverage",
     "cleantest": "npm run clean && npm run build && npm run test",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "watch": "bsb -make-world -w",
     "start": "npm run watch"
   },
