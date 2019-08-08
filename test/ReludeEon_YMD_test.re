@@ -37,6 +37,22 @@ describe("YMD", () => {
     expect(YMD.make(2018, Jul, 0)) |> toEqual(None)
   );
 
+  test("toTuple", () =>
+    expect(YMD.toTuple(ymd20180808)) |> toEqual((2018, Month.Aug, 8))
+  );
+
+  test("getYear", () =>
+    expect(YMD.getYear(ymd20190101)) |> toEqual(2019)
+  );
+
+  test("getMonth", () =>
+    expect(YMD.getMonth(ymd20190101)) |> toEqual(Month.Jan)
+  );
+
+  test("getDayOfMonth", () =>
+    expect(YMD.getDayOfMonth(ymd20190131)) |> toEqual(31)
+  );
+
   test("prevMonth (feb -> jan)", () =>
     expect(YMD.prevMonth(ymd20190228))
     |> toEqual(YMD.makeClamped(2019, Jan, 28))

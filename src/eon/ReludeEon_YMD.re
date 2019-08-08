@@ -63,15 +63,19 @@ let make = (year, month, day) => {
   day <= 0 || day > daysInMonth(ymd) ? None : Some(ymd);
 };
 
-let prevMonth = ymd => clampDay(unsafePrevMonth(ymd));
+// getters, since constructor is private
+let toTuple = (YMD(Year(year), month, DayOfMonth(day))) => (year, month, day);
+let getYear = (YMD(Year(year), _, _)) => year;
+let getMonth = (YMD(_, month, _)) => month;
+let getDayOfMonth = (YMD(_, _, DayOfMonth(day))) => day;
 
+let prevMonth = ymd => clampDay(unsafePrevMonth(ymd));
 let nextMonth = ymd => clampDay(unsafeNextMonth(ymd));
 
 let addDays = (howMany, YMD(_, _, DayOfMonth(day)) as ymd) =>
   wrap(unsafeWithDay(day + howMany, ymd));
 
 let nextDay = ymd => addDays(1, ymd);
-
 let prevDay = ymd => addDays(-1, ymd);
 
 let isLeapYear = (YMD(year, _, _)) => Year.isLeapYear(year);
