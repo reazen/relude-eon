@@ -3,9 +3,9 @@ module Month = ReludeEon_Month;
 module DayOfMonth = ReludeEon_DayOfMonth;
 
 type t =
-  | YMD(Year.t, Month.t, DayOfMonth.t);
+  | LocalDate(Year.t, Month.t, DayOfMonth.t);
 
-let daysInMonth = (YMD(year, month, _)) =>
+let daysInMonth = (LocalDate(year, month, _)) =>
   Month.totalDays(Year.isLeapYear(year), month);
 
 // -----------------------------------------------------------------------------
@@ -17,26 +17,26 @@ let daysInMonth = (YMD(year, month, _)) =>
 // shouldn't be possible outside of this module).
 // -----------------------------------------------------------------------------
 
-let unsafeWithDay = (day, YMD(year, month, _)) =>
-  YMD(year, month, DayOfMonth.fromInt(day));
+let unsafeWithDay = (day, LocalDate(year, month, _)) =>
+  LocalDate(year, month, DayOfMonth.fromInt(day));
 
-let unsafePrevMonth = (YMD(year, month, day)) => {
+let unsafePrevMonth = (LocalDate(year, month, day)) => {
   let year = Month.eq(month, Jan) ? Year.prev(year) : year;
-  YMD(year, Month.prev(month), day);
+  LocalDate(year, Month.prev(month), day);
 };
 
-let unsafeNextMonth = (YMD(year, month, day)) => {
+let unsafeNextMonth = (LocalDate(year, month, day)) => {
   let year = Month.eq(month, Dec) ? Year.next(year) : year;
-  YMD(year, Month.next(month), day);
+  LocalDate(year, Month.next(month), day);
 };
 
-let clampDay = (YMD(year, month, day) as ymd) => {
+let clampDay = (LocalDate(year, month, day) as ymd) => {
   let max = DayOfMonth.fromInt(daysInMonth(ymd));
   let clamped = DayOfMonth.clamp(~min=DayOfMonth.fromInt(1), ~max, day);
-  YMD(year, month, clamped);
+  LocalDate(year, month, clamped);
 };
 
-let rec wrap = (YMD(_, _, DayOfMonth(day)) as ymd) => {
+let rec wrap = (LocalDate(_, _, DayOfMonth(day)) as ymd) => {
   // TODO: for efficiency, we could start by seeing if `day` is gte 365 (or 366
   // if the next Feb is in a leap year). As long as `day` is gte one full year,
   // we could make big steps instead of going one month at a time.
@@ -53,41 +53,45 @@ let rec wrap = (YMD(_, _, DayOfMonth(day)) as ymd) => {
 // -----------------------------------------------------------------------------
 
 let makeWrapped = (year, month, day) =>
-  wrap(YMD(Year(year), month, DayOfMonth(day)));
+  wrap(LocalDate(Year(year), month, DayOfMonth(day)));
 
 let makeClamped = (year, month, day) =>
-  clampDay(YMD(Year(year), month, DayOfMonth(day)));
+  clampDay(LocalDate(Year(year), month, DayOfMonth(day)));
 
 let make = (year, month, day) => {
-  let ymd = YMD(Year(year), month, DayOfMonth(day));
+  let ymd = LocalDate(Year(year), month, DayOfMonth(day));
   day <= 0 || day > daysInMonth(ymd) ? None : Some(ymd);
 };
 
 // getters, since constructor is private
-let toTuple = (YMD(Year(year), month, DayOfMonth(day))) => (year, month, day);
-let getYear = (YMD(Year(year), _, _)) => year;
-let getMonth = (YMD(_, month, _)) => month;
-let getDayOfMonth = (YMD(_, _, DayOfMonth(day))) => day;
+let toTuple = (LocalDate(Year(year), month, DayOfMonth(day))) => (
+  year,
+  month,
+  day,
+);
+let getYear = (LocalDate(Year(year), _, _)) => year;
+let getMonth = (LocalDate(_, month, _)) => month;
+let getDayOfMonth = (LocalDate(_, _, DayOfMonth(day))) => day;
 
 let prevMonth = ymd => clampDay(unsafePrevMonth(ymd));
 let nextMonth = ymd => clampDay(unsafeNextMonth(ymd));
 
-let addDays = (howMany, YMD(_, _, DayOfMonth(day)) as ymd) =>
+let addDays = (howMany, LocalDate(_, _, DayOfMonth(day)) as ymd) =>
   wrap(unsafeWithDay(day + howMany, ymd));
 
 let nextDay = ymd => addDays(1, ymd);
 let prevDay = ymd => addDays(-1, ymd);
 
-let isLeapYear = (YMD(year, _, _)) => Year.isLeapYear(year);
+let isLeapYear = (LocalDate(year, _, _)) => Year.isLeapYear(year);
 
-let daysInYear = (YMD(year, _, _)) => Year.totalDays(year);
+let daysInYear = (LocalDate(year, _, _)) => Year.totalDays(year);
 
-let eq = (YMD(yeara, montha, daya), YMD(yearb, monthb, dayb)) =>
+let eq = (LocalDate(yeara, montha, daya), LocalDate(yearb, monthb, dayb)) =>
   Year.eq(yeara, yearb)
   && Month.eq(montha, monthb)
   && DayOfMonth.eq(daya, dayb);
 
-let compare = (YMD(yeara, montha, daya), YMD(yearb, monthb, dayb)) =>
+let compare = (LocalDate(yeara, montha, daya), LocalDate(yearb, monthb, dayb)) =>
   switch (Year.compare(yeara, yearb)) {
   | `equal_to =>
     switch (Month.compare(montha, monthb)) {

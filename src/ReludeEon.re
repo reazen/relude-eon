@@ -3,4 +3,4 @@ module Month = ReludeEon_Month;
 module DayOfMonth = ReludeEon_DayOfMonth;
 
 // common combinations of units
-module YMD = ReludeEon_YMD; // (year, month, day)
+module LocalDate = ReludeEon_LocalDate; // (year, month, day)
