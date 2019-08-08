@@ -8,7 +8,9 @@
 Relude Eon is a ReasonML library for working with type-safe date and time values in a sane way.
 
 ---
+
 **Current Status:** There's a concrete plan to make everything outlined in this README a reality, but some of the docs here are aspirational rather than real. For now. Give it a couple days.
+
 ---
 
 ## Core Concepts
