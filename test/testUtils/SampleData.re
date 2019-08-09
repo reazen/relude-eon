@@ -17,3 +17,17 @@ let ymd20200101 = LocalDate.makeClamped(2020, Jan, 31);
 let ymd20200228 = LocalDate.makeClamped(2020, Feb, 28);
 let ymd20200229 = LocalDate.makeClamped(2020, Feb, 29);
 let ymd20200301 = LocalDate.makeClamped(2020, Mar, 1);
+
+// -----------------------------------------------------------------------------
+// LocalTime (Hour-Minute-Second-Milli) values
+// -----------------------------------------------------------------------------
+
+let timeMin = LocalTime.fromMillisecondsClamped(0);
+let timeMax =
+  LocalTime.makeClampedLabels(
+    ~hour=23,
+    ~minute=59,
+    ~second=59,
+    ~millisecond=999,
+    (),
+  );
