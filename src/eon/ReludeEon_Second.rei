@@ -8,8 +8,8 @@ let makeClamped: int => t;
 let makeWrapped: int => t;
 let make: int => option(t);
 
-let addHours: (int, t) => t;
-let getHours: t => int;
+let addSeconds: (int, t) => t;
+let getSeconds: t => int;
 
 let eq: (t, t) => bool;
 let compare: (t, t) => BsAbstract.Interface.ordering;
