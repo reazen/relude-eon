@@ -22,9 +22,11 @@ let between: (~min: t, ~max: t, t) => bool;
 
 let fromMillisecondsWrapped: int => t;
 let fromMillisecondsClamped: int => t;
+let makeWrapped: (int, int, int, int) => t;
 let makeWrappedLabels:
   (~hour: int=?, ~minute: int=?, ~second: int=?, ~millisecond: int=?, unit) =>
   t;
+let makeClamped: (int, int, int, int) => t;
 let makeClampedLabels:
   (~hour: int=?, ~minute: int=?, ~second: int=?, ~millisecond: int=?, unit) =>
   t;
