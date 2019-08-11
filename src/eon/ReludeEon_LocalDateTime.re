@@ -16,3 +16,13 @@ let makeWrapped = (y, mo, d, h, m, s, ms) => {
 let makeWrappedLabels =
     (~year, ~month, ~day, ~hour=0, ~minute=0, ~second=0, ~millisecond=0, ()) =>
   makeWrapped(year, month, day, hour, minute, second, millisecond);
+
+let makeClamped = (y, mo, d, h, m, s, ms) =>
+  LocalDateTime(
+    LocalDate.makeClamped(y, mo, d),
+    LocalTime.makeClamped(h, m, s, ms),
+  );
+
+let makeClampedLabels =
+    (~year, ~month, ~day, ~hour, ~minute, ~second, ~millisecond=0, ()) =>
+  makeClamped(year, month, day, hour, minute, second, millisecond);
