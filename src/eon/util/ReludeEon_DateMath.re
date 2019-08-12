@@ -19,7 +19,7 @@ let hoursToMillis = h => minutesToMillis(h * 60);
 
 // takes different units of time as arguments, returns a tuple of
 // (days, hours, minutes, seconds, millis)
-// where each value is in the correct range
+// where each value is in the correct range, and `days` can be negative
 let wrapTime = (hour, minute, second, ms) => {
   let (/) = divWithRemainder;
   let (s, milliseconds) = ms / 1000;
