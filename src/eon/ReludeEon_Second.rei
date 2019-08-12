@@ -9,7 +9,7 @@ let makeWrapped: int => t;
 let make: int => option(t);
 
 let addSeconds: (int, t) => t;
-let getSeconds: t => int;
+let getSecond: t => int;
 
 let eq: (t, t) => bool;
 let compare: (t, t) => BsAbstract.Interface.ordering;

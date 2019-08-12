@@ -24,4 +24,4 @@ let makeClamped = i => BoundExtras.clamp(Second(i));
 let make = i => BoundExtras.ensure(Second(i));
 
 let addSeconds = WrappedExtras.addWrapped;
-let getSeconds = IntLike.toInt;
+let getSecond = IntLike.toInt;

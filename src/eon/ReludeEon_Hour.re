@@ -24,4 +24,4 @@ let makeClamped = i => BoundExtras.clamp(Hour(i));
 let make = i => BoundExtras.ensure(Hour(i));
 
 let addHours = WrappedExtras.addWrapped;
-let getHours = IntLike.toInt;
+let getHour = IntLike.toInt;

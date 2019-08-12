@@ -12,10 +12,10 @@ module IntLike = {
 
   let toInt = (LocalTime(h, m, s, milli)) =>
     Math.sumMillis(
-      Hour.getHours(h),
-      Minute.getMinutes(m),
-      Second.getSeconds(s),
-      Millisecond.getMilliseconds(milli),
+      Hour.getHour(h),
+      Minute.getMinute(m),
+      Second.getSecond(s),
+      Millisecond.getMillisecond(milli),
     );
 
   let fromInt = i => {
@@ -90,8 +90,15 @@ let addMinutes = howMany => addMilliseconds(Math.minutesToMillis(howMany));
 let addHours = howMany => addMilliseconds(Math.hoursToMillis(howMany));
 
 let toTuple = (LocalTime(h, m, s, mi)) => (
-  Hour.getHours(h),
-  Minute.getMinutes(m),
-  Second.getSeconds(s),
-  Millisecond.getMilliseconds(mi),
-) /* TODO: add asMilliseconds (== toInt, different from getMilliseconds*/ /* TODO: add getHours, get..*/;
+  Hour.getHour(h),
+  Minute.getMinute(m),
+  Second.getSecond(s),
+  Millisecond.getMillisecond(mi),
+);
+
+let getHour = (LocalTime(hour, _, _, _)) => Hour.getHour(hour);
+let getMinute = (LocalTime(_, minute, _, _)) => Minute.getMinute(minute);
+let getSecond = (LocalTime(_, _, second, _)) => Second.getSecond(second);
+/* TODO: add asMilliseconds (== toInt, different from getMillisecond*/
+let getMillisecond = (LocalTime(_, _, _, millisecond)) =>
+  Millisecond.getMillisecond(millisecond);

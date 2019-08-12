@@ -23,4 +23,4 @@ let makeClamped = i => BoundExtras.clamp(Millisecond(i));
 let make = i => BoundExtras.ensure(Millisecond(i));
 
 let addMilliseconds = WrappedExtras.addWrapped;
-let getMilliseconds = IntLike.toInt;
+let getMillisecond = IntLike.toInt;

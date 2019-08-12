@@ -35,3 +35,7 @@ let addSeconds: (int, t) => t;
 let addMinutes: (int, t) => t;
 let addHours: (int, t) => t;
 let toTuple: t => (int, int, int, int);
+let getHour: t => int;
+let getMinute: t => int;
+let getSecond: t => int;
+let getMillisecond: t => int;

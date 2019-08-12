@@ -76,7 +76,7 @@ For the purpose of date construction and addition, Eon assumes that every day ha
 
 Imagine we're writing a function that collects a user's birthdate (which they selected from a calendar widget that returned a sad Js.Date.t). We want to use this information, along with the user's timezone offset (an `int`) and the current timestamp as a ReludeEon.Instant.t, to schedule a "happy birthday" email to be sent at 10am on the user's next birthday.
 
-```reasonml
+```reason
 open ReludeEon;
 
 // Note: this function does everything from reading raw dates from JS to sending
@@ -126,7 +126,7 @@ Eon provides utilities that are meant to be composed with other functions from t
 
 In this example, we work with a list of login timestamps for a user (e.g. from some audit logs) and determine whether the user logged in between two specific dates.
 
-```reasonml
+```reason
 open ReludeEon;
 
 // imagine our system was known to be in a bad state from Mar 17, 2019 at
@@ -167,6 +167,6 @@ let loggedInAtBadTime = (loginTimes: InstantUTC.t) => {
 
 Most of the provided types (particularly the useful combination types) provide math helpers to add and subtract months, days, hours, etc. Here we use these features to build a list of the next 5 Fridays after a given date (e.g., to show options to the user in a dropdown).
 
-```reasonml
+```reason
 // TODO
 ```

@@ -70,6 +70,35 @@ let getMonth: t => ReludeEon_Month.t;
 let getDayOfMonth: t => int;
 
 /**
+ * Add an `int` number of years to a LocalDaate. When starting on a leap year
+ * and ending on a non-leap year, Feb 29 will turn into Feb 28.
+ */
+let addYears: (int, t) => t;
+
+/**
+ * Subtract one year from a given local date, clamping Feb 29 to Feb 28 if
+ * necessary.
+ */
+let prevYear: t => t;
+
+/**
+ * Add one year to a given local date, clamping Feb 29 to Feb 28 if necessary.
+ */
+let nextYear: t => t;
+
+/**
+ * Add an `int` number of months to a LocalDate, rolling the year forward or
+ * backward as necessary. If the dayOfMonth would exceed the valid number of
+ * days in the resulting month, it's clamped to the end of the month.
+ *
+ * ```reason
+ * addMonths(-2, makeClamped(2019, Jan, 1)) == makeClamped(2018, Nov, 1);
+ * addMonths(13, makeClamped(2019, Jan, 31)) == makeClamped(2020, Mar, 31);
+ * ```
+ */
+let addMonths: (int, t) => t;
+
+/**
  * Returns a new LocalDate representing the same point in the previous month.
  * The new date is clamped to the range of valid days in the new month. When
  * given a Jan date, `prevMonth` will return a date in Dec of the previous year.

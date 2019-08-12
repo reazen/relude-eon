@@ -53,6 +53,26 @@ describe("LocalDate", () => {
     expect(LocalDate.getDayOfMonth(ymd20190131)) |> toEqual(31)
   );
 
+  test("prevYear (feb 29 -> feb 28", () =>
+    expect(LocalDate.prevYear(ymd20200229)) |> toEqual(ymd20190228)
+  );
+
+  test("nextYear (feb 28 -> feb 28", () =>
+    expect(LocalDate.nextYear(ymd20190228)) |> toEqual(ymd20200228)
+  );
+
+  test("addMonths (2, skips feb)", () =>
+    expect(LocalDate.addMonths(2, ymd20200131)) |> toEqual(ymd20200331)
+  );
+
+  test("addMonths (24)", () =>
+    expect(LocalDate.addMonths(24, ymd20180131)) |> toEqual(ymd20200131)
+  );
+
+  test("addMonths (-14)", () =>
+    expect(LocalDate.addMonths(-14, ymd20200331)) |> toEqual(ymd20180131)
+  );
+
   test("prevMonth (feb -> jan)", () =>
     expect(LocalDate.prevMonth(ymd20190228))
     |> toEqual(LocalDate.makeClamped(2019, Jan, 28))
@@ -99,7 +119,7 @@ describe("LocalDate", () => {
   );
 
   test("isLeapYear (2020)", () =>
-    expect(LocalDate.isLeapYear(ymd20200101)) |> toEqual(true)
+    expect(LocalDate.isLeapYear(ymd20200131)) |> toEqual(true)
   );
 
   test("daysInYear (2019)", () =>
@@ -107,7 +127,7 @@ describe("LocalDate", () => {
   );
 
   test("daysInYear (2020)", () =>
-    expect(LocalDate.daysInYear(ymd20200101)) |> toEqual(366)
+    expect(LocalDate.daysInYear(ymd20200131)) |> toEqual(366)
   );
 
   test("eq (true)", () =>
@@ -129,7 +149,7 @@ describe("LocalDate", () => {
   );
 
   test("compare (month is less but year is greater", () =>
-    expect(LocalDate.compare(ymd20200101, ymd20190301))
+    expect(LocalDate.compare(ymd20200131, ymd20190301))
     |> toEqual(`greater_than)
   );
 

@@ -1,6 +1,7 @@
 module Year = ReludeEon_Year;
 module Month = ReludeEon_Month;
 module DayOfMonth = ReludeEon_DayOfMonth;
+module Math = ReludeEon_DateMath;
 
 type t =
   | LocalDate(Year.t, Month.t, DayOfMonth.t);
@@ -73,8 +74,24 @@ let getYear = (LocalDate(Year(year), _, _)) => year;
 let getMonth = (LocalDate(_, month, _)) => month;
 let getDayOfMonth = (LocalDate(_, _, DayOfMonth(day))) => day;
 
-let prevMonth = ymd => clampDay(unsafePrevMonth(ymd));
-let nextMonth = ymd => clampDay(unsafeNextMonth(ymd));
+let addYears = (howMany, LocalDate(year, month, day)) =>
+  clampDay(LocalDate(Year.addYears(howMany, year), month, day));
+
+let prevYear = ymd => addYears(-1, ymd);
+let nextYear = ymd => addYears(1, ymd);
+
+let addMonths = (howMany, LocalDate(Year(y), m, d)) => {
+  let monthSum = Month.toInt0Based(m) + howMany;
+  let (years, month) = Math.divWithRemainder(monthSum, 12);
+
+  // if we're moving backward and the month has rolled back to the previous year
+  // we need to subtract 1 extra year
+  let year = monthSum < 0 ? y + years - 1 : y + years;
+  clampDay(LocalDate(Year(year), Month.fromInt0BasedWrapped(month), d));
+};
+
+let prevMonth = ymd => addMonths(-1, ymd);
+let nextMonth = ymd => addMonths(1, ymd);
 
 let addDays = (howMany, LocalDate(_, _, DayOfMonth(day)) as ymd) =>
   wrap(unsafeWithDay(day + howMany, ymd));
@@ -91,7 +108,8 @@ let eq = (LocalDate(yeara, montha, daya), LocalDate(yearb, monthb, dayb)) =>
   && Month.eq(montha, monthb)
   && DayOfMonth.eq(daya, dayb);
 
-let compare = (LocalDate(yeara, montha, daya), LocalDate(yearb, monthb, dayb)) =>
+let compare =
+    (LocalDate(yeara, montha, daya), LocalDate(yearb, monthb, dayb)) =>
   switch (Year.compare(yeara, yearb)) {
   | `equal_to =>
     switch (Month.compare(montha, monthb)) {
