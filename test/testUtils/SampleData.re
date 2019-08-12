@@ -14,6 +14,7 @@ let ymd20190131 = LocalDate.makeClamped(2019, Jan, 31);
 let ymd20190221 = LocalDate.makeClamped(2019, Feb, 21);
 let ymd20190228 = LocalDate.makeClamped(2019, Feb, 28);
 let ymd20190301 = LocalDate.makeClamped(2019, Mar, 1);
+let ymd20200101 = LocalDate.makeClamped(2020, Jan, 1);
 let ymd20200131 = LocalDate.makeClamped(2020, Jan, 31);
 let ymd20200228 = LocalDate.makeClamped(2020, Feb, 28);
 let ymd20200229 = LocalDate.makeClamped(2020, Feb, 29);
@@ -33,3 +34,38 @@ let timeMax =
     ~millisecond=999,
     (),
   );
+
+let time1330 =
+  LocalTime.makeWrappedLabels(
+    ~hour=13,
+    ~minute=30,
+    ~second=0,
+    ~millisecond=0,
+    (),
+  );
+
+// -----------------------------------------------------------------------------
+// LocalDateTime (Year-Month-Day-Hour-Minute-Second-Milli) values
+// -----------------------------------------------------------------------------
+
+let dt20180101midnight =
+  LocalDateTime.makeWrappedLabels(
+    ~year=2018,
+    ~month=Jan,
+    ~day=1,
+    ~hour=0,
+    ~minute=0,
+    (),
+  );
+
+let dtMilliBefore2019 =
+  LocalDateTime.fromDateAndTime(ymd20181231, timeMax);
+
+let dt20190101midnight =
+  LocalDateTime.fromDateAndTime(ymd20190101, LocalTime.midnight);
+
+let dt20200101midnight =
+  LocalDateTime.fromDateAndTime(ymd20200101, LocalTime.midnight);
+
+let dt20200101noon =
+  LocalDateTime.fromDateClamped(~hour=12, ymd20200101);

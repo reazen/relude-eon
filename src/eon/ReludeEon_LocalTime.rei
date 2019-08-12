@@ -30,6 +30,10 @@ let makeClamped: (int, int, int, int) => t;
 let makeClampedLabels:
   (~hour: int=?, ~minute: int=?, ~second: int=?, ~millisecond: int=?, unit) =>
   t;
+
+let midnight: t;
+let noon: t;
+
 let addMilliseconds: (int, t) => t;
 let addSeconds: (int, t) => t;
 let addMinutes: (int, t) => t;

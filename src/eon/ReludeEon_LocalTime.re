@@ -84,6 +84,9 @@ let makeClamped = (hour, minute, second, millisecond) =>
 let makeClampedLabels = (~hour=0, ~minute=0, ~second=0, ~millisecond=0, ()) =>
   makeClamped(hour, minute, second, millisecond);
 
+let midnight = Bounded.bottom;
+let noon = makeClamped(12, 0, 0, 0);
+
 let addMilliseconds = WrappedExtras.addWrapped;
 let addSeconds = howMany => addMilliseconds(Math.secondsToMillis(howMany));
 let addMinutes = howMany => addMilliseconds(Math.minutesToMillis(howMany));

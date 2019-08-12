@@ -19,3 +19,8 @@ let wrapTime = (hour, minute, second, ms) => {
 
   (days, hours, minutes, seconds, milliseconds);
 };
+
+let addHours = (howMany, h, m, s, ms) => wrapTime(h + howMany, m, s, ms);
+let addMinutes = (howMany, h, m, s, ms) => wrapTime(h, m + howMany, s, ms);
+let addSeconds = (howMany, h, m, s, ms) => wrapTime(h, m, s + howMany, ms);
+let addMillis = (howMany, h, m, s, ms) => wrapTime(h, m, s, ms + howMany);

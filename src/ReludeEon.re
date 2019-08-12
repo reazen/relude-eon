@@ -9,3 +9,4 @@ module Millisecond = ReludeEon_Millisecond;
 // common combinations of units
 module LocalDate = ReludeEon_LocalDate; // (year, month, day)
 module LocalTime = ReludeEon_LocalTime; // (hour, minute, second, millisecond)
+module LocalDateTime = ReludeEon_LocalDateTime; // both of the above
