@@ -70,7 +70,7 @@ describe("LocalDate", () => {
   );
 
   test("addMonths (-14)", () =>
-    expect(LocalDate.addMonths(-14, ymd20200331)) |> toEqual(ymd20180131)
+    expect(LocalDate.addMonths(-14, ymd20200331)) |> toEqual(ymd20190131)
   );
 
   test("prevMonth (feb -> jan)", () =>

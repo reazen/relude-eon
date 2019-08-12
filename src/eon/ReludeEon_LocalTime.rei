@@ -34,12 +34,24 @@ let makeClampedLabels:
 let midnight: t;
 let noon: t;
 
-let addMilliseconds: (int, t) => t;
-let addSeconds: (int, t) => t;
-let addMinutes: (int, t) => t;
-let addHours: (int, t) => t;
 let toTuple: t => (int, int, int, int);
 let getHour: t => int;
 let getMinute: t => int;
 let getSecond: t => int;
 let getMillisecond: t => int;
+
+let addHours: (int, t) => t;
+let prevHour: t => t;
+let nextHour: t => t;
+
+let addMinutes: (int, t) => t;
+let prevMinute: t => t;
+let nextMinute: t => t;
+
+let addSeconds: (int, t) => t;
+let prevSecond: t => t;
+let nextSecond: t => t;
+
+let addMilliseconds: (int, t) => t;
+let prevMillisecond: t => t;
+let nextMillisecond: t => t;

@@ -83,11 +83,9 @@ let nextYear = ymd => addYears(1, ymd);
 let addMonths = (howMany, LocalDate(Year(y), m, d)) => {
   let monthSum = Month.toInt0Based(m) + howMany;
   let (years, month) = Math.divWithRemainder(monthSum, 12);
-
-  // if we're moving backward and the month has rolled back to the previous year
-  // we need to subtract 1 extra year
-  let year = monthSum < 0 ? y + years - 1 : y + years;
-  clampDay(LocalDate(Year(year), Month.fromInt0BasedWrapped(month), d));
+  clampDay(
+    LocalDate(Year(y + years), Month.fromInt0BasedWrapped(month), d),
+  );
 };
 
 let prevMonth = ymd => addMonths(-1, ymd);
