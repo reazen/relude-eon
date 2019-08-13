@@ -141,6 +141,19 @@ describe("Instant", () => {
     |> toEqual(inst2019EST)
   );
 
+  test("eq (fromLocalDateTime and fromInstantUTC are different)", () =>
+    expect(
+      Instant.eq(
+        Instant.fromDateTime(~offsetMinute=-360, dt20200101noon),
+        Instant.fromInstantUTC(
+          ~offsetMinute=-360,
+          InstantUTC.fromLocalDateTime(dt20200101noon),
+        ),
+      ),
+    )
+    |> toEqual(false)
+  );
+
   test("eq (true)", () =>
     expect(Instant.eq(inst2019EST, inst2019EST)) |> toEqual(true)
   );
