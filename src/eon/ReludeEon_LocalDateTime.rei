@@ -40,9 +40,11 @@ let fromDateClamped:
   t;
 
 let toTuple: t => (int, ReludeEon_Month.t, int, int, int, int, int);
+let getDate: t => ReludeEon_LocalDate.t;
 let getYear: t => int;
 let getMonth: t => ReludeEon_Month.t;
 let getDayOfMonth: t => int;
+let getTime: t => ReludeEon_LocalTime.t;
 let getHour: t => int;
 let getMinute: t => int;
 let getSecond: t => int;

@@ -75,11 +75,6 @@ describe("LocalDateTime", () => {
     expect(LocalDateTime.getMillisecond(dtMilliBefore2019)) |> toEqual(999)
   );
 
-  test("addYears", () =>
-    expect(LocalDateTime.addYears(2, dt20180101midnight))
-    |> toEqual(dt20200101midnight)
-  );
-
   test("prevYear", () =>
     expect(LocalDateTime.prevYear(dt20200101midnight))
     |> toEqual(dt20190101midnight)
@@ -89,26 +84,6 @@ describe("LocalDateTime", () => {
     expect(LocalDateTime.nextYear(dt20200101midnight))
     |> toEqual(
          LocalDateTime.makeClampedLabels(~year=2021, ~month=Jan, ~day=1, ()),
-       )
-  );
-
-  test("addMonths (wraps forward)", () =>
-    expect(
-      LocalDateTime.(
-        addMonths(2, fromDateAndTime(ymd20181231, LocalTime.noon))
-      ),
-    )
-    |> toEqual(LocalDateTime.fromDateAndTime(ymd20190228, LocalTime.noon))
-  );
-
-  test("addMonths (more than one year backward)", () =>
-    expect(
-      LocalDateTime.(
-        addMonths(-15, makeClampedLabels(~year=2018, ~month=Jan, ~day=4, ()))
-      ),
-    )
-    |> toEqual(
-         LocalDateTime.makeClampedLabels(~year=2016, ~month=Oct, ~day=4, ()),
        )
   );
 

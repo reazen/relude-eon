@@ -69,3 +69,17 @@ let dt20200101midnight =
 
 let dt20200101noon =
   LocalDateTime.fromDateClamped(~hour=12, ymd20200101);
+
+// -----------------------------------------------------------------------------
+// OffsetMinute
+// -----------------------------------------------------------------------------
+
+let offsetEST = OffsetMinute.makeClamped(-300);
+let offsetMST = OffsetMinute.makeClamped(-420);
+let offsetPST = OffsetMinute.makeClamped(-480);
+
+// -----------------------------------------------------------------------------
+// Instant (LocalDateTime, OffsetMinute)
+// -----------------------------------------------------------------------------
+
+let inst2019EST =  Instant.make(dt20190101midnight, offsetEST);

@@ -82,7 +82,8 @@ open ReludeEon;
 // Note: this function does everything from reading raw dates from JS to sending
 // or scheduling fake emails. This is a poorly-designed function. It does way
 // too much for the purpose of demonstrating ReludeEon features.
-let scheduleBdayEmail = (bday: Js.Date.t, offset: int, now: Instant.t) => {
+let scheduleBdayEmail =
+  (bday: Js.Date.t, offsetMinute: int, now: InstantUTC.t) => {
   // First of all, having a date object (i.e. an exact moment in UTC time) that
   // represents the user's birthday doesn't make much sense, so we convert it
   // to a ReludeEon LocalDate value. We assume that the `Date` represents
@@ -90,32 +91,37 @@ let scheduleBdayEmail = (bday: Js.Date.t, offset: int, now: Instant.t) => {
   // ambiguity of JS Dates can cause problems.
   let birthday =
     Interop.JsDate.toInstant(bday) // turn the Js.Date into an Instant.t
-    |> Instant.adjustOffset(offset) // adjust for user's offset
-    |> Instant.toLocalDate; // throw away hour/minute/second/milli and offset
+    |> Instant.adjustOffset(offsetMinute) // adjust for user's offset
+    |> Instant.getDate; // throw away hour/minute/second/milli and offset
 
   // next, set the year to this year, then determine if the birthday has already
   // happened this year (in which case we should schedule for next year)
-  let birthdayThisYear = LocalDate.setYear(Instant.getYear(now), birthday);
-  let today = Instant.toLocalDate(now);
+  let birthdayThisYear = LocalDate.setYear(InstantUTC.getYear(now), birthday);
+  let today = InstantUTC.getDate(now);
 
   // here we alias some comparison helpers. Note that these are not the usual
   // polymorphic (==) and (>) functions. These are type-safe, efficient
-  // functions that only work with YMD values.
-  let ((==) , (>)) = YMD.(eq, greaterThan);
+  // functions that only work with LocalDate values.
+  let ((==) , (>)) = LocalDate.(eq, greaterThan);
 
   if (birthdayThisYear == today) {
     sendTheEmailRightNow(); // it's not too late!
   } else {
     // if the birthday already happened this year, schedule for next year
     let targetDay = birthdayThisYear > today
-      ? birthdayThisYear : YMD.nextYear(birthdayThisYear);
+      ? birthdayThisYear : LocalDate.nextYear(birthdayThisYear);
 
-    // make it a specific time (10am given the user's offset)
-    let targetTime = Instant.fromYMD(~hour=10, ~offset, targetDay);
+    // make it a specific time (10am given the user's offset), adjusted to UTC
+    // and written as an ISO-8601 string for compatibility with some imaginary
+    // external service
+    let targetInstant =
+      Instant.fromDateClamped(~hour=10, ~offsetMinute, targetDay)
+      |> Instant.adjustOffsetToUTC
+      |> Instant.formatISO;
 
     // let's assume we're integrating with an external scheduling system that
     // wants UTC times provided as ISO-8601 strings
-    scheduleForLater(Instant.(asUTC(targetTime) |> formatAsIso8601));
+    scheduleForLater(targetInstant);
   };
 };
 ```

@@ -43,11 +43,13 @@ let toTuple = (LocalDateTime(date, time)) => {
   (year, month, day, hour, minute, second, ms);
 };
 
+let getDate = (LocalDateTime(date, _)) => date;
 let getYear = (LocalDateTime(date, _)) => LocalDate.getYear(date);
 let getMonth = (LocalDateTime(date, _)) => LocalDate.getMonth(date);
 let getDayOfMonth = (LocalDateTime(date, _)) =>
   LocalDate.getDayOfMonth(date);
 
+let getTime = (LocalDateTime(_, time)) => time;
 let getHour = (LocalDateTime(_, time)) => LocalTime.getHour(time);
 let getMinute = (LocalDateTime(_, time)) => LocalTime.getMinute(time);
 let getSecond = (LocalDateTime(_, time)) => LocalTime.getSecond(time);
