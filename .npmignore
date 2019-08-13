@@ -1,0 +1,28 @@
+# keep the tests and docs out of npm
+test
+CONTRIBUTING.md
+CHANGELOG.md
+.circleci
+.gitattributes
+
+# ...plus all of the stuff from gitignore
+
+# macOS
+.DS_Store
+
+# Node.js
+npm-debug.log
+/node_modules/
+
+# OCaml/BuckleScript/ReasonML
+.merlin
+.bsb.lock
+/lib/bs/
+*.bs.js
+
+# Git and editor
+*.orig
+.vscode/
+
+# Generated project files
+/coverage

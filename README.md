@@ -7,13 +7,45 @@
 
 Relude Eon is a ReasonML library for working with type-safe date and time values in a sane way.
 
-**Current Status:** There's a concrete plan to make everything outlined in this README a reality, but some of the docs here are aspirational rather than real. For now. Give it a couple days.
-
 ## Installation
 
-Eon has not yet been published to npm. No git tags exist, either. If you think you might find Eon useful in its current state, feel free to point your package.json at git master.
+**Install via npm:**
+
+`npm install --save relude-eon`
+
+**Update your bsconfig.json**
+
+```
+"bs-dependencies": [
+  "relude-eon"
+],
+```
 
 Eon has `peerDependencies` on `relude` and `bs-abstract`, so make sure to `npm install --save relude bs-abstract` and add them to your `bsconfig.json`.
+
+## Project Status
+
+This just might be useful!
+
+### Things That Work
+
+- All of the core building blocks are there (see below)
+- The useful types (e.g. `Instant`, `LocalDate`, `LocalTime`) all support basic date math
+- Basic interop with `Js.Date` exists
+- Most things have at least _some_ tests
+
+### Not Quite Yet
+
+- Durations (for generic date math, building ranges, etc)
+- Weekdays
+- String functions (parsers, formatters)
+- Timezones (we have offsets, but currently there's no support for named zones, daylight savings time, etc)
+
+### Currently Out-Of-Scope
+
+- Julian Calendar (leap years are calculated based on the Gregorian calendar, no mattter how far back in time you go)
+- Leap Seconds ([there's a plan](https://github.com/reazen/relude-eon/issues/4), but it isn't currently a priority)
+- Native (we're currently Bucklescript-only, but that's mostly because of our dependencies)
 
 ## Core Concepts
 
@@ -58,19 +90,9 @@ In reality, choosing a date from a calendar should only imply Year, Month, Day. 
 
 Eon solves all this by treating those pieces of data as different types, while providing functions to easily, _but explicitly_, convert between those types.
 
-### Challenges and Limitations
-
-Eon tries to make working with dates less painful, but dates can still be challenging, and there are some issues that are (currently) out of scope.
-
-#### Gregorian vs Julian calendar
-
-Eon assumes a Gregorian calendar (one where a year divisible by 100 will not be a leap year unless that year is also divisible by 400). We continue assuming a Gregorian calendar no matter how far back in time you go. September 1752 has 30 days, just like every other September.
-
-#### Leap Seconds
-
-For the purpose of date construction and addition, Eon assumes that every day has 86,400 seconds.
-
 ## Examples
+
+Note that these examples may be accurate, but they may also be aspirational. For now, [the tests](https://github.com/reazen/relude-eon/tree/master/test) are the best place to look for correct information about usage.
 
 ### Schedule Birthday Email
 
@@ -90,19 +112,22 @@ let scheduleBdayEmail =
   // midnight on the chosen day _in the user's timezone_, but this is where the
   // ambiguity of JS Dates can cause problems.
   let birthday =
-    Interop.JsDate.toInstant(bday) // turn the Js.Date into an Instant.t
-    |> Instant.adjustOffset(offsetMinute) // adjust for user's offset
-    |> Instant.getDate; // throw away hour/minute/second/milli and offset
+    // turn the Js.Date into an Instant.t in the user's timezone, then throw
+    // away hour/minute/second/milli and offset
+    Interop.JsDate.toInstant(~offsetMinute, bday) |> Instant.getDate;
 
-  // next, set the year to this year, then determine if the birthday has already
-  // happened this year (in which case we should schedule for next year)
-  let birthdayThisYear = LocalDate.setYear(InstantUTC.getYear(now), birthday);
+  // break down the "now" timestamp to the bits we care about
   let today = InstantUTC.getDate(now);
+  let currentYear = LocalDate.getYear(today);
 
   // here we alias some comparison helpers. Note that these are not the usual
   // polymorphic (==) and (>) functions. These are type-safe, efficient
   // functions that only work with LocalDate values.
   let ((==) , (>)) = LocalDate.(eq, greaterThan);
+
+  // next, set the year to this year, then determine if the birthday has already
+  // happened this year (in which case we should schedule for next year)
+  let birthdayThisYear = LocalDate.setYear(currentYear, birthday);
 
   if (birthdayThisYear == today) {
     sendTheEmailRightNow(); // it's not too late!
@@ -116,7 +141,7 @@ let scheduleBdayEmail =
     // external service
     let targetInstant =
       Instant.fromDateClamped(~hour=10, ~offsetMinute, targetDay)
-      |> Instant.adjustOffsetToUTC
+      |> Instant.adjustToUTC
       |> Instant.formatISO;
 
     // let's assume we're integrating with an external scheduling system that
@@ -138,7 +163,7 @@ open ReludeEon;
 // imagine our system was known to be in a bad state from Mar 17, 2019 at
 // 04:00:00UTC until Mar 26, 2019 at 17:30:00UTC. We want to look at a list of
 // user login timestamps and determine if they logged in during that period.
-let loggedInAtBadTime = (loginTimes: InstantUTC.t) => {
+let loggedInAtBadTime = (loginTimes: list(InstantUTC.t)) => {
   let badStart = InstantUTC.makeClamped(
     ~year=2019,
     ~month=Mar,
@@ -176,3 +201,11 @@ Most of the provided types (particularly the useful combination types) provide m
 ```reason
 // TODO
 ```
+
+## Contributing
+
+If you want to contribute code, that'd be awesome, but just _using_ Eon and providing feedback about any inconsistencies in the API or anything else that isn't quite clear is also incredibly valuable! For more details about how you can help, ([see CONTRIBUTING](https://github.com/reazen/relude-eon/blob/master/CONTRIBUTING.md)).
+
+## License
+
+Released under the [MIT license](https://github.com/reazen/relude-eon/blob/master/LICENSE).
