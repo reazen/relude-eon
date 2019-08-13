@@ -1,5 +1,6 @@
 module LocalDateTime = ReludeEon_LocalDateTime;
 module OffsetMinute = ReludeEon_OffsetMinute;
+module InstantUTC = ReludeEon_InstantUTC;
 
 type t =
   | Instant(LocalDateTime.t, OffsetMinute.t);
@@ -78,8 +79,6 @@ let fromDateClamped =
     OffsetMinute.makeClamped(offsetMinute),
   );
 
-// TODO: fromInstantUTC
-
 // destructure and set values
 let toTuple = (Instant(dt, offset)) => {
   let (y, mo, d, h, m, s, ms) = LocalDateTime.toTuple(dt);
@@ -145,7 +144,13 @@ let adjustOffsetClamped = (offset, instant) =>
 
 let adjustToUTC = adjustOffset(OffsetMinute.utc);
 
-// TODO: toInstantUTC
+let fromInstantUTC = (~offsetMinute=0, utc) => {
+  let instant = Instant(InstantUTC.getLocalDateTime(utc), OffsetMinute.utc);
+  adjustOffsetClamped(offsetMinute, instant);
+}
+
+let toInstantUTC = instant =>
+  adjustToUTC(instant) |> getDateTime |> InstantUTC.fromLocalDateTime;
 
 // Instants can be compared for equality, but note that two moments in time may
 // not be strictly equal if the timezone is not the same. For this reason, we

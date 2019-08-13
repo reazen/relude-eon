@@ -58,8 +58,9 @@ let dt20180101midnight =
     (),
   );
 
-let dtMilliBefore2019 =
-  LocalDateTime.fromDateAndTime(ymd20181231, timeMax);
+let dt2hrBefore2019 = LocalDateTime.fromDateClamped(~hour=22, ymd20181231);
+
+let dtMilliBefore2019 = LocalDateTime.fromDateAndTime(ymd20181231, timeMax);
 
 let dt20190101midnight =
   LocalDateTime.fromDateAndTime(ymd20190101, LocalTime.midnight);
@@ -67,8 +68,7 @@ let dt20190101midnight =
 let dt20200101midnight =
   LocalDateTime.fromDateAndTime(ymd20200101, LocalTime.midnight);
 
-let dt20200101noon =
-  LocalDateTime.fromDateClamped(~hour=12, ymd20200101);
+let dt20200101noon = LocalDateTime.fromDateClamped(~hour=12, ymd20200101);
 
 // -----------------------------------------------------------------------------
 // OffsetMinute
@@ -82,4 +82,6 @@ let offsetPST = OffsetMinute.makeClamped(-480);
 // Instant (LocalDateTime, OffsetMinute)
 // -----------------------------------------------------------------------------
 
-let inst2019EST =  Instant.make(dt20190101midnight, offsetEST);
+let inst2019EST = Instant.make(dt20190101midnight, offsetEST);
+let inst2hrBefore2019MST = Instant.make(dt2hrBefore2019, offsetMST);
+let inst2019MST = Instant.make(dt20190101midnight, offsetMST);

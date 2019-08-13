@@ -1,16 +1,13 @@
+open Relude.Globals;
+
 // integer division that returns both quotient and remainder
-
-let positiveMod = (a, b) =>
-  if (abs(a) == abs(b)) {
-    0; // (-60 mod 60) kept turning into -0 instead of 0, which made tests fail
-  } else {
-    let remainder = a mod b;
-    remainder < 0 ? remainder + b : remainder;
-  };
-
 let divWithRemainder = (a, b) => {
-  let floatDiv = floor(float_of_int(a) /. float_of_int(b));
-  (int_of_float(floatDiv), positiveMod(a, b));
+  // mod function that always returns positive remainders
+  let positiveMod = (a, b) => (a mod b + abs(b)) mod b;
+
+  // divide two ints as a float
+  let (/) = (a, b) => Int.toFloat(a) /. Int.toFloat(b);
+  (Float.floorAsInt(a / b), positiveMod(a, b));
 };
 
 let secondsToMillis = s => s * 1000;

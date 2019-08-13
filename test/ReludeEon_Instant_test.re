@@ -123,6 +123,24 @@ describe("Instant", () => {
     |> toEqual(LocalDateTime.makeClamped(2019, Jan, 1, 5, 0, 0, 0))
   );
 
+  test("toInstantUTC", () =>
+    expect(Instant.toInstantUTC(inst2019EST))
+    |> toEqual(
+         InstantUTC.fromLocalDateTime(
+           LocalDateTime.makeClamped(2019, Jan, 1, 5, 0, 0, 0),
+         ),
+       )
+  );
+
+  test("toInstantUTC/fromInstantUTC (round-trip)", () =>
+    expect(
+      Instant.(
+        fromInstantUTC(~offsetMinute=-300, toInstantUTC(inst2019EST))
+      ),
+    )
+    |> toEqual(inst2019EST)
+  );
+
   test("eq (true)", () =>
     expect(Instant.eq(inst2019EST, inst2019EST)) |> toEqual(true)
   );
