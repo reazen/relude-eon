@@ -13,3 +13,7 @@ module LocalTime = ReludeEon_LocalTime; // (hour, minute, second, millisecond)
 module LocalDateTime = ReludeEon_LocalDateTime; // both of the above
 module Instant = ReludeEon_Instant; // local date time + offset minutes
 module InstantUTC = ReludeEon_InstantUTC; // instant with offset = 0
+
+module Interop = {
+  module JsDate = ReludeEon_Interop_JsDate;
+};
