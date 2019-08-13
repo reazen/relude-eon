@@ -20,6 +20,12 @@ type t =
 let fromInt1BasedWrapped: int => t;
 
 /**
+ * Given any int, return a `Month.t` where values <= 1 are `Jan`, and values
+ * >=12 are `Dec`. All other ints correspond with the 1-based Month.
+ */
+let fromInt1BasedClamped: int => t;
+
+/**
  * Given an int in the range 1...12 (inclusive), return `Some(Month.t)`. If the
  * provided int falls outside that range, `None` is returned.
  */
@@ -31,6 +37,13 @@ let fromInt1Based: int => option(t);
  * `-1 => Dec`
  */
 let fromInt0BasedWrapped: int => t;
+
+/**
+ * Given any int, return a `Month.t` where values <= 0 are `Jan`, and values
+ * >=11 are `Dec`. All other ints correspond with the 0-based Month.
+ */
+let fromInt0BasedClamped: int => t;
+
 
 /**
  * Given an int in the range 0...11 (inclusive), return `Some(Month.t)`. If the

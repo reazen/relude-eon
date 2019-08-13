@@ -20,7 +20,7 @@ module MakeExtras = (I: IntLike) => {
 
   let eq = Eq.eq;
   let compare = Ord.compare;
-  include Relude_Extensions_Ord.Make(Ord);
+  include Relude_Extensions_Ord.OrdExtensions(Ord);
 };
 
 module MakeBoundedExtras = (I: IntLike, B: BOUNDED with type t = I.t) => {

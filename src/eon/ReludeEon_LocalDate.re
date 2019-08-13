@@ -54,23 +54,23 @@ let rec wrap = (LocalDate(_, _, DayOfMonth(day)) as ymd) => {
 // -----------------------------------------------------------------------------
 
 let makeWrapped = (year, month, day) =>
-  wrap(LocalDate(Year(year), month, DayOfMonth(day)));
+  wrap(LocalDate(Year.fromInt(year), month, DayOfMonth(day)));
 
 let makeClamped = (year, month, day) =>
-  clampDay(LocalDate(Year(year), month, DayOfMonth(day)));
+  clampDay(LocalDate(Year.fromInt(year), month, DayOfMonth(day)));
 
 let make = (year, month, day) => {
-  let ymd = LocalDate(Year(year), month, DayOfMonth(day));
+  let ymd = LocalDate(Year.fromInt(year), month, DayOfMonth(day));
   day <= 0 || day > daysInMonth(ymd) ? None : Some(ymd);
 };
 
 // getters, since constructor is private
-let toTuple = (LocalDate(Year(year), month, DayOfMonth(day))) => (
-  year,
+let toTuple = (LocalDate(year, month, DayOfMonth(day))) => (
+  Year.getYear(year),
   month,
   day,
 );
-let getYear = (LocalDate(Year(year), _, _)) => year;
+let getYear = (LocalDate(year, _, _)) => Year.getYear(year);
 let getMonth = (LocalDate(_, month, _)) => month;
 let getDayOfMonth = (LocalDate(_, _, DayOfMonth(day))) => day;
 
@@ -80,11 +80,15 @@ let addYears = (howMany, LocalDate(year, month, day)) =>
 let prevYear = ymd => addYears(-1, ymd);
 let nextYear = ymd => addYears(1, ymd);
 
-let addMonths = (howMany, LocalDate(Year(y), m, d)) => {
+let addMonths = (howMany, LocalDate(y, m, d)) => {
   let monthSum = Month.toInt0Based(m) + howMany;
   let (years, month) = Math.divWithRemainder(monthSum, 12);
   clampDay(
-    LocalDate(Year(y + years), Month.fromInt0BasedWrapped(month), d),
+    LocalDate(
+      Year.addYears(years, y),
+      Month.fromInt0BasedWrapped(month),
+      d,
+    ),
   );
 };
 
@@ -127,4 +131,4 @@ module Ord: BsAbstract.Interface.ORD with type t = t = {
   let compare = compare;
 };
 
-include Relude_Extensions_Ord.Make(Ord);
+include Relude_Extensions_Ord.OrdExtensions(Ord);

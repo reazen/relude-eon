@@ -1,22 +1,13 @@
-open Relude.Globals;
-
 type t =
   | DayOfMonth(int);
 
-let fromInt = v => DayOfMonth(v);
-
-let eq = (DayOfMonth(a), DayOfMonth(b)) => a == b;
-
-let compare = (DayOfMonth(a), DayOfMonth(b)) => Int.compare(a, b);
-
-module Eq: BsAbstract.Interface.EQ with type t = t = {
+module IntLike = {
   type nonrec t = t;
-  let eq = eq;
+  let fromInt = v => DayOfMonth(v);
+  let toInt = (DayOfMonth(v)) => v;
 };
 
-module Ord: BsAbstract.Interface.ORD with type t = t = {
-  include Eq;
-  let compare = compare;
-};
+let fromInt = IntLike.fromInt;
+let toInt = IntLike.toInt;
 
-include Relude_Extensions_Ord.Make(Ord);
+include ReludeEon_IntLike.MakeExtras(IntLike);

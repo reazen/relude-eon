@@ -30,12 +30,12 @@ module MakeRingLikeExtras =
          RingOrd: ORD with type t = Ring.t,
          RingLike: Compatible with type t = Bounded.t and type other = Ring.t,
        ) => {
+  let (toRing, fromRing) = RingLike.(toOther, fromOther);
   /**
    * An add function that takes a value of the Ring type (e.g. Int) and
    * increases the provided bounded value
    */
   let addWrapped = (howMany, bounded) => {
-    let (toRing, fromRing) = RingLike.(toOther, fromOther);
     let (top, bottom) = (toRing(Bounded.top), toRing(Bounded.bottom));
     let ((+), (-)) = Ring.(add, subtract);
     let (>) = (a, b) => RingOrd.compare(a, b) == `greater_than;
@@ -68,5 +68,26 @@ module MakeRingLikeExtras =
    * Given a value of the Ring type, return a valid Bounded value, wrapping as
    * needed.
    */
-  let wrappedFromRing = ring => addWrapped(ring, Bounded.bottom);
+  let wrappedFromRing = ring => addWrapped(ring, fromRing(Ring.zero));
+
+  /**
+   * Given a value of the Ring type, return a vlid Bounded value, clamping to
+   * the upper and lower Ring bounds
+   */
+  let clampedFromRing = ring => {
+    let (top, bottom) = (toRing(Bounded.top), toRing(Bounded.bottom));
+    let (>) = (a, b) => RingOrd.compare(a, b) == `greater_than;
+    let (<) = (a, b) => RingOrd.compare(a, b) == `less_than;
+
+    ring > top
+      ? fromRing(top) : ring < bottom ? fromRing(bottom) : fromRing(ring);
+  };
+
+  let ensureFromRing = ring => {
+    let (top, bottom) = (toRing(Bounded.top), toRing(Bounded.bottom));
+    let (>) = (a, b) => RingOrd.compare(a, b) == `greater_than;
+    let (<) = (a, b) => RingOrd.compare(a, b) == `less_than;
+
+    ring > top || ring < bottom ? None : Some(fromRing(ring));
+  };
 };

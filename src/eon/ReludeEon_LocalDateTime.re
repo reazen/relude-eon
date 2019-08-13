@@ -119,4 +119,4 @@ module Ord: BsAbstract.Interface.ORD with type t = t = {
   let compare = compare;
 };
 
-include Relude_Extensions_Ord.Make(Ord);
+include Relude_Extensions_Ord.OrdExtensions(Ord);

@@ -23,6 +23,18 @@ describe("Month", () => {
     expect(Month.fromInt1BasedWrapped(38)) |> toEqual(Month.Feb)
   );
 
+  test("fromInt1BasedClamped (in range)", () =>
+    expect(Month.fromInt1BasedClamped(4)) |> toEqual(Month.Apr)
+  );
+
+  test("fromInt1BasedClamped (below range)", () =>
+    expect(Month.fromInt1BasedClamped(-1)) |> toEqual(Month.Jan)
+  );
+
+  test("fromInt1BasedClamped (above range)", () =>
+    expect(Month.fromInt1BasedClamped(13)) |> toEqual(Month.Dec)
+  );
+
   test("fromInt1Based (lower bound)", () =>
     expect(Month.fromInt1Based(1)) |> toEqual(Some(Month.Jan))
   );
@@ -31,11 +43,11 @@ describe("Month", () => {
     expect(Month.fromInt1Based(12)) |> toEqual(Some(Month.Dec))
   );
 
-  test("fromInt1Based (too high)", () =>
+  test("fromInt1Based (above range)", () =>
     expect(Month.fromInt1Based(13)) |> toEqual(None)
   );
 
-  test("fromInt1Based (too low)", () =>
+  test("fromInt1Based (below range)", () =>
     expect(Month.fromInt1Based(0)) |> toEqual(None)
   );
 
@@ -45,6 +57,18 @@ describe("Month", () => {
 
   test("fromInt0BasedWrapped (below range)", () =>
     expect(Month.fromInt0BasedWrapped(-4)) |> toEqual(Month.Sep)
+  );
+
+  test("fromInt0BasedClamped (in range)", () =>
+    expect(Month.fromInt0BasedClamped(11)) |> toEqual(Month.Dec)
+  );
+
+  test("fromInt0BasedClamped (below range)", () =>
+    expect(Month.fromInt0BasedClamped(-11)) |> toEqual(Month.Jan)
+  );
+
+  test("fromInt0BasedClamped (above range)", () =>
+    expect(Month.fromInt0BasedClamped(111)) |> toEqual(Month.Dec)
   );
 
   test("fromInt0Based", () =>

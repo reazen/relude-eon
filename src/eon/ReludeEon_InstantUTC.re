@@ -20,4 +20,4 @@ module Ord: BsAbstract.Interface.ORD with type t = t = {
 
 let eq = Eq.eq;
 let compare = Ord.compare;
-include Relude_Extensions_Ord.Make(Ord);
+include Relude_Extensions_Ord.OrdExtensions(Ord);

@@ -1,5 +1,4 @@
-type t =
-  | Year(int);
+type t;
 
 /**
  * Determine whether a year is a leap year (i.e. its February has 29 days). The
@@ -13,6 +12,16 @@ let isLeapYear: t => bool;
  * have 365.
  */
 let totalDays: t => int;
+
+/**
+ * Construct a Year from any int
+ */
+let fromInt: int => t;
+
+/**
+ * Extract the year value as an int
+ */
+let getYear: t => int;
 
 /**
  * Increase a year by a given int.
