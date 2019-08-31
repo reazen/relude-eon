@@ -77,14 +77,14 @@ The building blocks are fine, but they're a lot more useful when you start combi
 | LocalDate | A 3-tuple of (year, month, day), where `day` is always validated against the combination of year and month. Feb 29 can exist in the year 2020, but not in 2019. |
 | LocalTime | A 4-tuple of (hour, minute, second, millisecond). The lower bound is midnight (0, 0, 0, 0), and the upper bound is the millisecond before midnight (23, 59, 59, 999) |
 | LocalDateTime | Combines a `LocalDate` with a `LocalTime`, effectively year, month, day, hour, minute, second, millisecond. Note that this does not assume any particular timezone/offset. |
-| Instant | A `LocalDate` paired with a UTC offset in minutes. _This_ is the type you want if you're looking to represent an exact moment in time, as JS dates do. Indeed, this type can be converted to or from JavaScript dates (though the original offset will be lost when converting to JS). |
+| Instant | A `LocalDateTime` paired with a UTC offset in minutes. _This_ is the type you want if you're looking to represent an exact moment in time, as JS dates do. Indeed, this type can be converted to or from JavaScript dates (though the original offset will be lost when converting to JS). |
 | InstantUTC | Exactly like `Instant`, except the UTC offset is assumed to be `0`. This is slightly less powerful than a normal `Instant`, but it can be converted 1:1 with a JS date, and it can be ordered or checked for equality more easily because there aren't multiple ways to represent the same value. |
 
 ### Differences from JS Date
 
 Cinco de Mayo happens every year on May 5. This year, it was on May 5, 2019. The Cinco de Mayo parade began at exactly 2pm Mountain Time (-360 minutes from UTC) on May 5, 2019.
 
-These statements represent different types of data, which may seem obvious, but if you've used JavaScript dates in the browser, you've probably run into calendar widgets that return a `Date` object, which suggests that the user has selected a precise `Instant`.
+These statements represent different types of data, which may seem obvious, but if you've used JavaScript dates in the browser, you've probably run into calendar picker widgets that return a `Date` object, which suggests that the user has selected a precise `Instant`.
 
 In reality, choosing a date from a calendar should only imply Year, Month, Day. Worse, you can't even safely convert that `Date` object into a Year, Month, Day, without more ontext, because the `Date.getDate` function (which returns the day-of-month) could give different answers depending on the client's timezone offset.
 
@@ -96,14 +96,14 @@ Note that these examples may be accurate, but they may also be aspirational. For
 
 ### Schedule Birthday Email
 
-Imagine we're writing a function that collects a user's birthdate (which they selected from a calendar widget that returned a sad Js.Date.t). We want to use this information, along with the user's timezone offset (an `int`) and the current timestamp as a ReludeEon.Instant.t, to schedule a "happy birthday" email to be sent at 10am on the user's next birthday.
+Imagine we're writing a function that collects a user's birthdate (which they selected from a calendar widget that returned a sad Js.Date.t). We want to use this information, along with the user's timezone offset (an `int`) and the current timestamp as a ReludeEon.InstantUTC.t, to schedule a "happy birthday" email to be sent at 10am on the user's next birthday.
 
 ```reason
 open ReludeEon;
 
 // Note: this function does everything from reading raw dates from JS to sending
 // or scheduling fake emails. This is a poorly-designed function. It does way
-// too much for the purpose of demonstrating ReludeEon features.
+// too much, with the goal of demonstrating several ReludeEon features.
 let scheduleBdayEmail =
   (bday: Js.Date.t, offsetMinute: int, now: InstantUTC.t) => {
   // First of all, having a date object (i.e. an exact moment in UTC time) that
