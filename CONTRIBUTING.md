@@ -14,7 +14,7 @@ Also, please make sure that your code has been formatted with [`refmt`](https://
 
 ### Tests
 
-`relude-eon` doesn't quite have full test coverage, but if you want to help us get there, we'd be very grateful. :) Running `npm run test` (or `jest --coverage`) will run your tests and give you a coverage report. You can see the detailed report in `./coverage/lcov-report/index.html`, which will help you track down any uncovered functions or branches.
+`relude-eon` doesn't quite have full test coverage, but if you want to help us get there, we'd be very grateful. :) Running `npm run coverage` will run your tests and give you a coverage report. You can see the detailed report in `./docs/coverage/lcov-report/index.html`, which will help you track down any uncovered functions or branches.
 
 ### Documentation
 

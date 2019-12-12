@@ -1,6 +1,6 @@
 # Relude Eon
 
-[![build status](https://img.shields.io/circleci/project/github/reazen/relude-eon/master.svg)](https://circleci.com/gh/reazen/relude-eon)
+[![GitHub CI](https://img.shields.io/github/workflow/status/reazen/relude/CI/master)](https://github.com/reazen/relude/actions)
 [![test coverage](https://img.shields.io/coveralls/github/reazen/relude-eon.svg)](https://coveralls.io/github/reazen/relude-eon)
 [![npm version](https://img.shields.io/npm/v/relude-eon.svg)](https://www.npmjs.com/package/relude-eon)
 [![license](https://img.shields.io/github/license/reazen/relude-eon.svg)](https://github.com/reazen/relude-eon/blob/master/LICENSE)
