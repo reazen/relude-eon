@@ -86,7 +86,7 @@ Cinco de Mayo happens every year on May 5. This year, it was on May 5, 2019. The
 
 These statements represent different types of data, which may seem obvious, but if you've used JavaScript dates in the browser, you've probably run into calendar picker widgets that return a `Date` object, which suggests that the user has selected a precise `Instant`.
 
-In reality, choosing a date from a calendar should only imply Year, Month, Day. Worse, you can't even safely convert that `Date` object into a Year, Month, Day, without more ontext, because the `Date.getDate` function (which returns the day-of-month) could give different answers depending on the client's timezone offset.
+In reality, choosing a date from a calendar should only imply Year, Month, Day. Worse, you can't even safely convert that `Date` object into a Year, Month, Day, without more context, because the `Date.getDate` function (which returns the day-of-month) could give different answers depending on the client's timezone offset.
 
 Eon solves all this by treating those pieces of data as different types, while providing functions to easily, _but explicitly_, convert between those types.
 
