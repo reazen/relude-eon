@@ -1,6 +1,6 @@
 {
   "name": "relude-eon",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A datetime tool for the ages in ReasonML",
   "main": "index.js",
   "scripts": {
