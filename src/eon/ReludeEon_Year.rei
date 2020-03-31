@@ -47,10 +47,10 @@ let eq: (t, t) => bool;
  * Given two years, determine whether the first is less than, greater than, or
  * equal to the second.
  */
-let compare: (t, t) => BsAbstract.Interface.ordering;
+let compare: (t, t) => BsBastet.Interface.ordering;
 
-module Eq: BsAbstract.Interface.EQ with type t = t;
-module Ord: BsAbstract.Interface.ORD with type t = t;
+module Eq: BsBastet.Interface.EQ with type t = t;
+module Ord: BsBastet.Interface.ORD with type t = t;
 
 /**
  * Compare two years for `ordering`, returning `1` if the first is greater than

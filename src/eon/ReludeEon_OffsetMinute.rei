@@ -1,11 +1,11 @@
 type t;
 
-module Eq: BsAbstract.Interface.EQ with type t = t;
-module Ord: BsAbstract.Interface.ORD with type t = t;
-module Bounded: BsAbstract.Interface.BOUNDED with type t = t;
+module Eq: BsBastet.Interface.EQ with type t = t;
+module Ord: BsBastet.Interface.ORD with type t = t;
+module Bounded: BsBastet.Interface.BOUNDED with type t = t;
 
 let eq: (t, t) => bool;
-let compare: (t, t) => BsAbstract.Interface.ordering;
+let compare: (t, t) => BsBastet.Interface.ordering;
 let compareAsInt: (t, t) => int;
 let min: (t, t) => t;
 let max: (t, t) => t;

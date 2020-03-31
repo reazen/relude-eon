@@ -1,4 +1,4 @@
-open BsAbstract.Interface;
+open BsBastet.Interface;
 open Relude.Globals;
 
 module type IntLike = {
@@ -33,7 +33,7 @@ module MakeBoundedExtras = (I: IntLike, B: BOUNDED with type t = I.t) => {
 
   include ReludeEon_Bounded.MakeRingLikeExtras(
             B,
-            BsAbstract.Int.Euclidean_Ring,
+            BsBastet.Int.Euclidean_Ring,
             Int.Ord,
             IntCompat,
           );

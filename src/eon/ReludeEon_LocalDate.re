@@ -121,12 +121,12 @@ let compare =
   | v => v
   };
 
-module Eq: BsAbstract.Interface.EQ with type t = t = {
+module Eq: BsBastet.Interface.EQ with type t = t = {
   type nonrec t = t;
   let eq = eq;
 };
 
-module Ord: BsAbstract.Interface.ORD with type t = t = {
+module Ord: BsBastet.Interface.ORD with type t = t = {
   include Eq;
   let compare = compare;
 };

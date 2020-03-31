@@ -9,7 +9,7 @@ module IntLike = {
 
 include ReludeEon_IntLike.MakeExtras(IntLike);
 
-module Bounded: BsAbstract.Interface.BOUNDED with type t = t = {
+module Bounded: BsBastet.Interface.BOUNDED with type t = t = {
   include Ord;
   let bottom = OffsetMinute(-720); // no offsets beyond -12:00 exist
   let top = OffsetMinute(840); // no offsets above +14:00 exist

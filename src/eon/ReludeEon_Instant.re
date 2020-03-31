@@ -159,7 +159,7 @@ let toInstantUTC = instant =>
 let eq = (Instant(dta, offseta), Instant(dtb, offsetb)) =>
   LocalDateTime.eq(dta, dtb) && OffsetMinute.eq(offseta, offsetb);
 
-module Eq: BsAbstract.Interface.EQ with type t = t = {
+module Eq: BsBastet.Interface.EQ with type t = t = {
   type nonrec t = t;
   let eq = eq;
 };

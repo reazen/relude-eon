@@ -9,7 +9,7 @@ module IntLike = {
 
 include ReludeEon_IntLike.MakeExtras(IntLike); // Eq and Ord
 
-module Bounded: BsAbstract.Interface.BOUNDED with type t = t = {
+module Bounded: BsBastet.Interface.BOUNDED with type t = t = {
   include Ord;
   let bottom = Hour(0);
   let top = Hour(23);

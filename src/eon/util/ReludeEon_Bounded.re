@@ -1,4 +1,4 @@
-open BsAbstract.Interface;
+open BsBastet.Interface;
 
 module MakeExtras = (B: BOUNDED) => {
   let clamp =

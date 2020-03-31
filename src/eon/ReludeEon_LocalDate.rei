@@ -178,10 +178,10 @@ let eq: (t, t) => bool;
  * compare(nov2019, jan2020) == `less_than;
  * ```
  */
-let compare: (t, t) => BsAbstract.Interface.ordering;
+let compare: (t, t) => BsBastet.Interface.ordering;
 
-module Eq: BsAbstract.Interface.EQ with type t = t;
-module Ord: BsAbstract.Interface.ORD with type t = t;
+module Eq: BsBastet.Interface.EQ with type t = t;
+module Ord: BsBastet.Interface.ORD with type t = t;
 
 /**
  * Compare two LocalDate values, returning `1` if the first is greater than the

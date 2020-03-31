@@ -113,15 +113,15 @@ let totalDays: (bool, t) => int;
  * Month.compare(Feb, Jan) == `greater_than;
  * ```
  */
-let compare: (t, t) => BsAbstract.Interface.ordering;
+let compare: (t, t) => BsBastet.Interface.ordering;
 
 /**
  * Determine whether two month values are the same
  */
 let eq: (t, t) => bool;
 
-module Eq: BsAbstract.Interface.EQ with type t = t;
-module Ord: BsAbstract.Interface.ORD with type t = t;
+module Eq: BsBastet.Interface.EQ with type t = t;
+module Ord: BsBastet.Interface.ORD with type t = t;
 
 /**
  * Compare two months, returning `1` if the first is greater, `0` if they are
