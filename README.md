@@ -11,9 +11,11 @@ Relude Eon is a ReasonML library for working with type-safe date and time values
 
 **Install via npm:**
 
-`npm install --save relude-eon relude bs-abstract`
+```sh
+npm install --save relude-eon relude bs-bastet
+```
 
-`relude` and `bs-abstract` are peerDependencies of eon.
+`relude` and `bs-bastet` are peerDependencies of Relude Eon in order to [avoid duplicate copies of dependencies](https://reazen.github.io/relude/#/FAQ?id=why-does-relude-use-peer-dependencies-for-everything-rather-than-hard-production-dependencies).
 
 **Update your bsconfig.json**
 
@@ -21,7 +23,7 @@ Relude Eon is a ReasonML library for working with type-safe date and time values
 "bs-dependencies": [
   "relude-eon",
   "relude",
-  "bs-abstract"
+  "bs-bastet"
 ],
 ```
 
@@ -33,15 +35,15 @@ This just might be useful!
 
 - All of the core building blocks are there (see below)
 - The useful types (e.g. `Instant`, `LocalDate`, `LocalTime`) all support basic date math
-- Basic interop with `Js.Date` exists
-- Most things have at least _some_ tests
+- Conversion functions to/from `Js.Date` exist
+- Most existing functionality is reasonably well-tested
 
 ### Not Quite Yet
 
 - Durations (for generic date math, building ranges, etc)
 - Weekdays
 - String functions (parsers, formatters)
-- Timezones (we have offsets, but currently there's no support for named zones, daylight savings time, etc)
+- Timezones (we have UTC offsets, but there's not yet support for named zones, daylight savings time, etc)
 
 ### Currently Out-Of-Scope
 
