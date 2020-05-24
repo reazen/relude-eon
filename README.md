@@ -11,17 +11,19 @@ Relude Eon is a ReasonML library for working with type-safe date and time values
 
 **Install via npm:**
 
-`npm install --save relude-eon`
+`npm install --save relude-eon relude bs-abstract`
+
+`relude` and `bs-abstract` are peerDependencies of eon.
 
 **Update your bsconfig.json**
 
 ```
 "bs-dependencies": [
-  "relude-eon"
+  "relude-eon",
+  "relude",
+  "bs-abstract"
 ],
 ```
-
-Eon has `peerDependencies` on `relude` and `bs-abstract`, so make sure to `npm install --save relude bs-abstract` and add them to your `bsconfig.json`.
 
 ## Project Status
 
